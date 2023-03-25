@@ -1,52 +1,46 @@
 const uuid = require("uuid");
-//test test
 function getId() {
   return uuid.v1();
 }
-
 const initialUsers = () => {
   return [
-    { id: getId(), kullaniciAdi: "veysel", sifre: "1234" },
-    { id: getId(), kullaniciAdi: "veysel1", sifre: "1234" },
-    { id: getId(), kullaniciAdi: "veysel2", sifre: "1234" },
-    { id: getId(), kullaniciAdi: "veysel3", sifre: "1234" },
+    { id: getId(), kullaniciAdi: "meltem", sifre: "1234" },
+    { id: getId(), kullaniciAdi: "serhat", sifre: "1234" },
+    { id: getId(), kullaniciAdi: "seren", sifre: "1234" },
+    { id: getId(), kullaniciAdi: "ali", sifre: "1234" },
   ];
 };
 
 let users = initialUsers();
 
-function getAllUsers() {
+function getAllUser() {
   return users;
 }
-
 function createNewUser(user) {
   user.id = getId();
   users.push(user);
   return user;
 }
-
 function findUser(user) {
-  let isFind = false;
+  let İsFind = false;
   for (let i = 0; i < users.length; i++) {
     const item = users[i];
     if (item.kullaniciAdi === user.kullaniciAdi && item.sifre === user.sifre) {
-      isFind = true;
+      İsFind = true;
       break;
     }
   }
-  return isFind;
+  return İsFind;
 }
 
 function checkIsSameUserName(userName) {
-  let isSameUserNameExist = users.find(
-    (item) => item.kullaniciAdi === userName
-  );
-  return !!isSameUserNameExist;
+  //opsiyonel eklendi
+  let nameExist = users.find((item) => item.kullaniciAdi === userName);
+  return !!nameExist; //boş değil TRUE FALSE DEĞER DÖNER
 }
-
 module.exports = {
-  getAllUsers,
+  getAllUser,
+  createNewUser,
   findUser,
   checkIsSameUserName,
-  createNewUser,
 };

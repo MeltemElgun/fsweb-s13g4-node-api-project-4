@@ -1,30 +1,35 @@
 const express = require("express");
 const cors = require("cors");
-const mw = require("./middleware");
+const {
+  logger,
+  validateNewUser,
+  checkSameUserName,
+  isValidUser,
+} = require("./middleware");
 const userModel = require("./user-model");
 
 const server = express();
 server.use(express.json());
-server.use(mw.logger);
+server.use(logger);
 server.use(cors());
 
 server.get("/api/kullanicilar", (req, res, next) => {
-  res.json(userModel.getAllUsers());
+  res.json(userModel.getAllUser());
 });
-
 server.post(
   "/api/kayitol",
-  mw.checkSameUserName,
-  mw.validateNewUser,
+  checkSameUserName,
+  validateNewUser,
   (req, res, next) => {
     let user = req.user;
-    let createdUser = userModel.createNewUser(user);
-    res.status(201).json(createdUser);
+    let newUser = userModel.createNewUser(user);
+    res.status(201).json(newUser);
   }
 );
-
-server.post("/api/giris", mw.isValidUser, (req, res, next) => {
-  res.status(201).json({ message: "Hoş Geldiniz " + req.body.kullaniciAdi });
+server.post("/api/giris", isValidUser, (req, res, next) => {
+  res
+    .status(201)
+    .json({ message: "hoşgeldiniz" + " " + req.body.kullaniciAdi });
 });
 
 server.use((err, req, res, next) => {
